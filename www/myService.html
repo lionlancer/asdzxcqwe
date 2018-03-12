@@ -66,9 +66,10 @@
 							currUser = uid;
 							
 							var data = {};
+							data['userId'] = currUser++;
 							data['updateCount'] = updateCount++;
 							data['position'] = {};
-							firebase.database().ref('users/' + uid).update(data);
+							firebase.database().ref('users/' + uid).set(data);
 							
 							getStatus();
 							
@@ -101,6 +102,7 @@
 			var onSuccess = function(position) {
 				console.log("Position: ", position);
 				
+				var data = {};
 				var position = { 
 					'Latitude': position.coords.latitude, 
 					'Longitude': position.coords.longitude, 
@@ -112,12 +114,12 @@
 					'Timestamp': position.timestamp, 
 				};
 				
-				firebase.database().ref('users/' + currUser).setUpdateCount(updateCount++).catch(function(e){
-					console.log('Error in setUpdateCount: ', e);
+				data['updateCount'] = updateCount++;
+				data['position'] = position;
+				
+				firebase.database().ref('users/' + currUser).update(data).catch(function(e){
+					console.log('Error in update: ', e);
 				});
-				firebase.database().ref('users/' + currUser).setPosition(position).catch(function(e){
-					console.log('Error in setPosition: ', e);
-				});;
 				
 				alert('Latitude: '          + position.coords.latitude          + '\n' +
 					  'Longitude: '         + position.coords.longitude         + '\n' +
