@@ -1,10 +1,10 @@
 {
-  "name": "com.red_folder.phonegap.plugin.backgroundservice.sample",
+  "name": "org.bgservice.app",
   "version": "2.0.0",
   "description": "Sample service to demonstrate the use of the Cordova Android Background Service.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Red-Folder/bgs-sample.git"
+    "url": "git+https://github.com/lionlancer/asdzxcqwe.git"
   },
   "keywords": [
     "background",
@@ -19,10 +19,10 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": "Red-Folder",
+  "author": "lionlancer",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/Red-Folder/bgs-sample/issues"
+    "url": "https://github.com/lionlancer/asdzxcqwe/issues"
   },
-  "homepage": "https://github.com/Red-Folder/bgs-sample#readme"
+  "homepage": "https://github.com/lionlancer/asdzxcqwe#readme"
 }
