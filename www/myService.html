@@ -110,7 +110,7 @@
 					'Heading': position.coords.heading, 
 					'Speed': position.coords.speed, 
 					'Timestamp': position.timestamp, 
-				;
+				};
 				
 				firebase.database().ref('users/' + currUser).setUpdateCount(updateCount++);
 				firebase.database().ref('users/' + currUser).setPosition(position);
