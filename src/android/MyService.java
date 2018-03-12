@@ -22,6 +22,13 @@ public class MyService extends BackgroundService {
 	protected JSONObject doWork() {
 		JSONObject result = new JSONObject();
 		
+		URL url = null;
+		URLConnection con = null;
+		HttpURLConnection http  = null;
+		byte[] out = null;
+		int length = null;
+		OutputStream os = null;
+		
 		try {
 			
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
