@@ -40,14 +40,14 @@ public class MyService extends BackgroundService {
 			Log.d(TAG, msg);
 			
 			if(this.userID != ""){
-				URL url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
-				URLConnection con = url.openConnection();		
-				HttpURLConnection http = (HttpURLConnection)con;
+				url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
+				con = url.openConnection();		
+				http = (HttpURLConnection)con;
 				http.setRequestMethod("POST"); // PUT is another valid option
 				http.setDoOutput(true);
 				
-				byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
-				int length = out.length;
+				out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
+				length = out.length;
 
 				http.setFixedLengthStreamingMode(length);
 				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -56,7 +56,7 @@ public class MyService extends BackgroundService {
 				//	os.write(out);
 				//}
 				try{
-					OutputStream os = http.getOutputStream();
+					os = http.getOutputStream();
 					os.write(out);
 				}catch(Exception e){}
 				
