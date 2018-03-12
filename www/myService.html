@@ -34,8 +34,8 @@
 		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
 		<script>
-			var updateCount = 0;
-			var currUser = '';
+			window.updateCount = 0;
+			window.currUser = '';
 			
 			// Initialize Firebase
 			// TODO: Replace with your project's customized code snippet
@@ -63,12 +63,21 @@
 							// User is signed in.
 							var isAnonymous = user.isAnonymous;
 							var uid = user.uid;
-							currUser = uid;
+							window.currUser = uid;
 							
 							var data = {};
-							data['userId'] = currUser++;
-							data['updateCount'] = updateCount++;
-							data['position'] = {};
+							data['userId'] = window.currUser;
+							data['updateCount'] = window.updateCount++;
+							data['position'] = { 
+								'Latitude': 0, 
+								'Longitude': 0, 
+								'Altitude': 0, 
+								'Accuracy': 0, 
+								'AltitudeAccuracy': 0, 
+								'Heading': 0, 
+								'Speed': 0, 
+								'Timestamp': 0, 
+							};
 							firebase.database().ref('users/' + uid).set(data);
 							
 							getStatus();
@@ -102,22 +111,21 @@
 			var onSuccess = function(position) {
 				console.log("Position: ", position);
 				
-				var data = {};
-				var position = { 
-					'Latitude': position.coords.latitude, 
-					'Longitude': position.coords.longitude, 
-					'Altitude': position.coords.altitude, 
-					'Accuracy': position.coords.accuracy, 
-					'AltitudeAccuracy': position.coords.altitudeAccuracy, 
-					'Heading': position.coords.heading, 
-					'Speed': position.coords.speed, 
-					'Timestamp': position.timestamp, 
+				var data = {
+					'updateCount': window.updateCount++,
+					'position': { 
+						'Latitude': position.coords.latitude, 
+						'Longitude': position.coords.longitude, 
+						'Altitude': position.coords.altitude, 
+						'Accuracy': position.coords.accuracy, 
+						'AltitudeAccuracy': position.coords.altitudeAccuracy, 
+						'Heading': position.coords.heading, 
+						'Speed': position.coords.speed, 
+						'Timestamp': position.timestamp, 
+					}
 				};
 				
-				data['updateCount'] = updateCount++;
-				data['position'] = position;
-				
-				firebase.database().ref('users/' + currUser).update(data).catch(function(e){
+				firebase.database().ref('users/' + window.currUser).update(data).catch(function(e){
 					console.log('Error in update: ', e);
 				});
 				
