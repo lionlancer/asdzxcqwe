@@ -59,7 +59,7 @@ public class MyService extends BackgroundService {
 				
 				try{
 					http.setRequestMethod("POST"); // PUT is another valid option
-				}catch(ProtocolException){
+				}catch(ProtocolException e){
 					System.err.println("ProtocolException thrown: " + e.getMessage());
 				}
 				http.setDoOutput(true);
