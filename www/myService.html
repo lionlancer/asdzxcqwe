@@ -67,7 +67,7 @@
 							
 							var config = { 
  								"userID" : uid,
-								"updateCount" : windows.updateCount
+								"updateCount" : window.updateCount
  							}; 
 							myService.setConfiguration(	config,
 											function(r){handleSuccess(r)},
@@ -136,7 +136,7 @@
 				
 				var config = { 
 					"userID" : currUser,
-					"updateCount" : windows.updateCount
+					"updateCount" : window.updateCount
 				}; 
 				myService.setConfiguration(	config,
 								function(r){handleSuccess(r)},
