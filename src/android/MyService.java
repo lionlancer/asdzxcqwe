@@ -45,9 +45,14 @@ public class MyService extends BackgroundService {
 				http.setFixedLengthStreamingMode(length);
 				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 				http.connect();
-				try(OutputStream os = http.getOutputStream()) {
+				//try(OutputStream os = http.getOutputStream()) {
+				//	os.write(out);
+				//}
+				try{
+					OutputStream os = http.getOutputStream();
 					os.write(out);
-				}
+				}catch(Exception e){}
+				
 				// Do something with http.getInputStream()
 			}
 		} catch (JSONException e) {
