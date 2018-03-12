@@ -27,8 +27,8 @@ public class MyService extends BackgroundService {
 		URL url = null;
 		URLConnection con = null;
 		HttpURLConnection http  = null;
-		byte[] out = null;
-		int length = null;
+		//byte[] out = null;
+		//int length = null;
 		OutputStream os = null;
 		
 		try {
@@ -48,8 +48,8 @@ public class MyService extends BackgroundService {
 				http.setRequestMethod("POST"); // PUT is another valid option
 				http.setDoOutput(true);
 				
-				out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
-				length = out.length;
+				byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
+				int length = out.length;
 
 				http.setFixedLengthStreamingMode(length);
 				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
