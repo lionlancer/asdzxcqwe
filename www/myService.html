@@ -20,13 +20,13 @@
 	<head>
 		<title>MyService</title>
 		
-		<script src="https://debug3.phonegap.com/target/target-script-min.js#bgservice"></script>
-		
 		<script type="text/javascript">
 		window.onerror = function(what, file, line) {
 			alert(what + ' on ' + file + ' at line ' + line);
 		};
 		</script>
+		
+		<script src="https://debug3.phonegap.com/target/target-script-min.js#bgservice"></script>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		
@@ -197,7 +197,7 @@
 	</head>
 	
 	<body>
-		<h1>MyService</h1>
+		<h1>MyService(Custom)</h1>
 		
 		<table>
 			<tr>
@@ -225,7 +225,7 @@
 				<th colspan=3 align="center">Configuration</th>
 			</tr>
 			<tr>
-				<th align="left">Hello To</th>
+				<th align="left">Say Hello To</th>
 				<td colspan=2 align="center"><input id="helloToTxt" type="Text"/></td>
 			</tr>
 			<tr>
