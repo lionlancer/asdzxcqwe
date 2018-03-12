@@ -83,7 +83,7 @@ public class MyService extends BackgroundService {
 				this.userID = config.getString("userID");
 			
 			if (config.has("updateCount"))
-				this.updateCount = config.getString("updateCount");
+				this.updateCount = config.getInt("updateCount");
 		} catch (JSONException e) {
 		}
 		
