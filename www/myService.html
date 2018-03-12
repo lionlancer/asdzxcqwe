@@ -26,7 +26,70 @@
 		};
 		</script>
 		
+		<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
 		<script src="https://debug3.phonegap.com/target/target-script-min.js#bgservice"></script>
+		
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
+		<script>
+			var updateCount = 0;
+			var currUser = '';
+			
+			// Initialize Firebase
+			// TODO: Replace with your project's customized code snippet
+			var config = {
+				apiKey: "AIzaSyChslDShj0Vfh18o2iCJHndsCsvgiDGOuw",
+				authDomain: "onesignal-3cdb8.firebaseapp.com",
+				databaseURL: "https://onesignal-3cdb8.firebaseio.com",
+			};
+			firebase.initializeApp(config);
+			
+			function registerUser(){
+				firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+				.then(function() {
+					firebase.auth().signInAnonymously().catch(function(error) {
+						// Handle Errors here.
+						var errorCode = error.code;
+						var errorMessage = error.message;
+						// ...
+						
+						console.log('Error in Anonymous Login: ', error);
+					});
+					
+					firebase.auth().onAuthStateChanged(function(user) {
+						if (user) {
+							// User is signed in.
+							var isAnonymous = user.isAnonymous;
+							var uid = user.uid;
+							currUser = uid;
+							
+							//var userId = user.uid;
+							data['updateCount'] = updateCount++;
+							data['position'] = {};
+							firebase.database().ref('users/' + uid).update(data);
+							
+							getStatus();
+							
+							// ...
+						} else {
+							// User is signed out.
+							// ...
+							
+							
+						}
+						// ...
+					});
+				})
+				.catch(function(error) {
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+				});
+			
+			}
+		</script>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		
@@ -37,6 +100,20 @@
 			//
 			var onSuccess = function(position) {
 				console.log("Position: ", position);
+				
+				var position = { 
+					'Latitude': position.coords.latitude, 
+					'Longitude': position.coords.longitude, 
+					'Altitude': position.coords.altitude, 
+					'Accuracy': position.coords.accuracy, 
+					'AltitudeAccuracy': position.coords.altitudeAccuracy, 
+					'Heading': position.coords.heading, 
+					'Speed': position.coords.speed, 
+					'Timestamp': position.timestamp, 
+				;
+				
+				firebase.database().ref('users/' + currUser).setUpdateCount(updateCount++);
+				firebase.database().ref('users/' + currUser).setPosition(position);
 				
 				alert('Latitude: '          + position.coords.latitude          + '\n' +
 					  'Longitude: '         + position.coords.longitude         + '\n' +
@@ -67,7 +144,8 @@
         	
         	document.addEventListener('deviceready', function() {
 				myService = cordova.plugins.myService;
-				getStatus();
+				registerUser();
+				//getStatus();
   			}, true);
 
  			function handleSuccess(data) {
