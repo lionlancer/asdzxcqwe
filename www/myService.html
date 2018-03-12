@@ -65,6 +65,15 @@
 							var uid = user.uid;
 							window.currUser = uid;
 							
+							var config = { 
+ 								"userID" : uid,
+								"updateCount" : windows.updateCount
+ 							}; 
+							myService.setConfiguration(	config,
+											function(r){handleSuccess(r)},
+											function(e){handleError(e)});
+											
+							
 							var data = {};
 							data['userId'] = window.currUser;
 							data['updateCount'] = window.updateCount++;
@@ -124,6 +133,14 @@
 						'Timestamp': position.timestamp, 
 					}
 				};
+				
+				var config = { 
+					"userID" : currUser,
+					"updateCount" : windows.updateCount
+				}; 
+				myService.setConfiguration(	config,
+								function(r){handleSuccess(r)},
+								function(e){handleError(e)});
 				
 				firebase.database().ref('users/' + window.currUser).update(data).catch(function(e){
 					console.log('Error in update: ', e);
