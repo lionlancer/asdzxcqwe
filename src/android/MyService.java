@@ -33,8 +33,8 @@ public class MyService extends BackgroundService {
 			Log.d(TAG, msg);
 			
 			if(this.userID != ""){
-				URL url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json"); https://[PROJECT_ID].firebaseio.com/users/jack/name.json
-				URLConnection con = url.openConnection();
+				URL url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
+				URLConnection con = url.openConnection();		
 				HttpURLConnection http = (HttpURLConnection)con;
 				http.setRequestMethod("POST"); // PUT is another valid option
 				http.setDoOutput(true);
