@@ -65,15 +65,6 @@
 							var uid = user.uid;
 							window.currUser = uid;
 							
-							var config = { 
- 								"userID" : uid,
-								"updateCount" : window.updateCount
- 							}; 
-							myService.setConfiguration(	config,
-											function(r){handleSuccess(r)},
-											function(e){handleError(e)});
-											
-							
 							var data = {};
 							data['userId'] = window.currUser;
 							data['updateCount'] = window.updateCount++;
@@ -87,9 +78,23 @@
 								'Speed': 0, 
 								'Timestamp': 0, 
 							};
-							firebase.database().ref('users/' + uid).set(data);
+							console.log('Saving UID: ', uid);
+							firebase.database().ref('users/' + uid).set(data).then(function(e){
+								console.log('Saved UID: ', uid);
+								
+								var config = { 
+									"userID" : window.currUser,
+									"updateCount" : window.updateCount
+								}; 
+								myService.setConfiguration(	config,
+											function(r){handleSuccess(r)},
+											function(e){handleError(e)});
 							
-							getStatus();
+							
+								getStatus();
+							});
+							
+							
 							
 							// ...
 						} else {
@@ -134,15 +139,16 @@
 					}
 				};
 				
-				var config = { 
-					"userID" : currUser,
-					"updateCount" : window.updateCount
-				}; 
-				myService.setConfiguration(	config,
-								function(r){handleSuccess(r)},
-								function(e){handleError(e)});
-				
-				firebase.database().ref('users/' + window.currUser).update(data).catch(function(e){
+				firebase.database().ref('users/' + window.currUser).update(data).then(function(e){
+					var config = { 
+						"userID" : window.currUser,
+						"updateCount" : window.updateCount
+					}; 
+					myService.setConfiguration(	config,
+									function(r){handleSuccess(r)},
+									function(e){handleError(e)});
+					
+				})catch(function(e){
 					console.log('Error in update: ', e);
 				});
 				
