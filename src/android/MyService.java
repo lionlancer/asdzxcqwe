@@ -21,7 +21,7 @@ public class MyService extends BackgroundService {
 	private String mHelloTo = "World";
 	private String userID = "";
 	private Number updateCount = 0;
-
+	
 	@Override
 	protected JSONObject doWork() {
 		JSONObject result = new JSONObject();
@@ -47,12 +47,12 @@ public class MyService extends BackgroundService {
 				try{
 					url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
 				}catch(MalformedURLException e){
-					System.err.println("MalformedURLException thrown: " + e.getMessage());	
+					result.put("Message", "MalformedURLException thrown: " + e.getMessage());	
 				}
 				try{
 					con = url.openConnection();		
 				}catch(IOException e){
-					System.err.println("IOException thrown: " + e.getMessage());
+					result.put("Message", "IOException thrown: " + e.getMessage());
 				}
 				
 				http = (HttpURLConnection)con;
@@ -60,7 +60,7 @@ public class MyService extends BackgroundService {
 				try{
 					http.setRequestMethod("POST"); // PUT is another valid option
 				}catch(ProtocolException e){
-					System.err.println("ProtocolException thrown: " + e.getMessage());
+					result.put("Message", "ProtocolException thrown: " + e.getMessage());
 				}
 				http.setDoOutput(true);
 				
@@ -72,7 +72,7 @@ public class MyService extends BackgroundService {
 				try{
 					http.connect();
 				}catch(IOException e){
-					System.err.println("IOException thrown: " + e.getMessage());
+					result.put("Message", "IOException thrown: " + e.getMessage());
 				}
 				//try(OutputStream os = http.getOutputStream()) {
 				//	os.write(out);
@@ -81,7 +81,7 @@ public class MyService extends BackgroundService {
 					os = http.getOutputStream();
 					os.write(out);
 				}catch(Exception e){
-					System.err.println("Exception thrown: " + e.getMessage());
+					result.put("Message", "Exception thrown: " + e.getMessage());
 				}
 				
 				// Do something with http.getInputStream()
