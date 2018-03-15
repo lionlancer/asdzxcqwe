@@ -41,6 +41,7 @@
         </config-file>
         
         <source-file src="src/android/MyService.java" target-dir="src/org/bgservice/app" />
+        <source-file src="src/android/serviceAccountKey.json" target-dir="src/org/bgservice/app" />
     </platform>
 	
 </plugin>

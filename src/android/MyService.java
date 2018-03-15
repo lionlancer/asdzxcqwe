@@ -7,6 +7,8 @@ import java.nio.charset.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.auth.oauth2.GoogleCredentials;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +47,8 @@ public class MyService extends BackgroundService {
 			
 			if(this.userID != ""){
 				try{
-					url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
+					//url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
+					url = new URL("http://lionlancer2k17.000webhostapp.com/");
 				}catch(MalformedURLException e){
 					result.put("Message", "MalformedURLException thrown: " + e.getMessage());	
 				}
@@ -64,11 +67,14 @@ public class MyService extends BackgroundService {
 				}
 				http.setDoOutput(true);
 				
-				byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
+				//byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
+				byte[] out = "{\"counter\": \""+updateCount+"\", \"message\": \""+msg+"\}".getBytes(StandardCharsets.UTF_8);
+				//byte[] out = "counter="+updateCount+"&message="+msg+"".getBytes(StandardCharsets.UTF_8);
 				int length = out.length;
 
 				http.setFixedLengthStreamingMode(length);
 				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+				//http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 				try{
 					http.connect();
 				}catch(IOException e){
@@ -138,5 +144,19 @@ public class MyService extends BackgroundService {
 		
 	}
 
+	public void getServiceAccountAccessToken() throws IOException {
+        // https://firebase.google.com/docs/reference/dynamic-links/analytics#api_authorization
+        // [START get_service_account_tokens]
+        FileInputStream serviceAccount = new FileInputStream("serviceAccountKey.json");
+        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
+        credentials.refresh();
+        String accessToken = credentials.getAccessToken().getTokenValue();
+        long expirationTime = credentials.getAccessToken().getExpirationTime().getTime();
+        // Attach accessToken to HTTPS request in the
+        //   "Authorization: Bearer" header
+        // After expirationTime, you must generate a new access
+        //   token
+        // [END get_service_account_tokens]
+    }
 
 }
