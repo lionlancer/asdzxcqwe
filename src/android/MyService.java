@@ -7,7 +7,7 @@ import java.nio.charset.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.google.auth.oauth2.GoogleCredentials;
+//import com.google.auth.oauth2.GoogleCredentials;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -144,6 +144,7 @@ public class MyService extends BackgroundService {
 		
 	}
 
+	/*
 	public void getServiceAccountAccessToken() throws IOException {
         // https://firebase.google.com/docs/reference/dynamic-links/analytics#api_authorization
         // [START get_service_account_tokens]
@@ -158,5 +159,5 @@ public class MyService extends BackgroundService {
         //   token
         // [END get_service_account_tokens]
     }
-
+	*/
 }
