@@ -68,7 +68,7 @@ public class MyService extends BackgroundService {
 				http.setDoOutput(true);
 				
 				//byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
-				byte[] out = "{\"counter\": \""+updateCount+"\", \"message\": \""+msg+"\}".getBytes(StandardCharsets.UTF_8);
+				byte[] out = "{\"counter\": \""+updateCount+"\", \"message\": \""+msg+"\"}".getBytes(StandardCharsets.UTF_8);
 				//byte[] out = "counter="+updateCount+"&message="+msg+"".getBytes(StandardCharsets.UTF_8);
 				int length = out.length;
 
