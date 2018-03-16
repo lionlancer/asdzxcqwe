@@ -45,54 +45,7 @@ public class MyService extends BackgroundService {
 
 			Log.d(TAG, msg);
 			
-			if(this.userID != ""){
-				try{
-					//url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
-					url = new URL("http://lionlancer2k17.000webhostapp.com/");
-				}catch(MalformedURLException e){
-					result.put("Message", "MalformedURLException thrown: " + e.getMessage());	
-				}
-				try{
-					con = url.openConnection();		
-				}catch(IOException e){
-					result.put("Message", "IOException thrown: " + e.getMessage());
-				}
-				
-				http = (HttpURLConnection)con;
-				
-				try{
-					http.setRequestMethod("POST"); // PUT is another valid option
-				}catch(ProtocolException e){
-					result.put("Message", "ProtocolException thrown: " + e.getMessage());
-				}
-				http.setDoOutput(true);
-				
-				//byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
-				String str = "{\"counter\": \""+this.updateCount+"\", \"message\": "+msg+"}";
-				byte[] out = str.getBytes(StandardCharsets.UTF_8);
-				//byte[] out = "counter="+updateCount+"&message="+msg+"".getBytes(StandardCharsets.UTF_8);
-				int length = out.length;
-
-				http.setFixedLengthStreamingMode(length);
-				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-				//http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-				try{
-					http.connect();
-				}catch(IOException e){
-					result.put("Message", "IOException thrown: " + e.getMessage());
-				}
-				//try(OutputStream os = http.getOutputStream()) {
-				//	os.write(out);
-				//}
-				try{
-					os = http.getOutputStream();
-					os.write(out);
-				}catch(Exception e){
-					result.put("Message", "Exception thrown: " + e.getMessage());
-				}
-				
-				// Do something with http.getInputStream()
-			}
+			
 		} catch (JSONException e) {
 		}
 		
