@@ -44,22 +44,24 @@ public class MyService extends BackgroundService {
 			result.put("Message", msg);
 
 			Log.d(TAG, msg);
+			Log.d("MyService", msg);
+			
 			
 			if(this.userID != ""){
 				try{
 					//url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
 					url = new URL("http://lionlancer2k17.000webhostapp.com/");
-					Log.d("GetURL: "+ "http://lionlancer2k17.000webhostapp.com/, OK");
+					Log.d("MyService", "http://lionlancer2k17.000webhostapp.com/, OK");
 				}catch(MalformedURLException e){
-					Log.d("MalformedURLException: "+ e.getMessage());
+					Log.d("MyService", "Error: " + e.getMessage());
 					result.put("Message", "MalformedURLException thrown: " + e.getMessage());
 					
 				}
 				try{
 					con = url.openConnection();		
-					Log.d("url.openConnection: "+ "OK");
+					Log.d("MyService", "url.openConnection: OK");
 				}catch(IOException e){
-					Log.d("IOException: "+ e.getMessage());
+					Log.d("MyService", "Error: " + e.getMessage());
 					result.put("Message", "IOException thrown: " + e.getMessage());
 				}
 				
@@ -67,15 +69,16 @@ public class MyService extends BackgroundService {
 				
 				try{
 					http.setRequestMethod("POST"); // PUT is another valid option
-					Log.d("http.setRequestMethod('POST'): "+ "OK");
+					Log.d("MyService", "http.setRequestMethod: OK");
 				}catch(ProtocolException e){
-					Log.d("ProtocolException: "+ e.getMessage());
+					Log.d("MyService", "Error: " + e.getMessage());
 					result.put("Message", "ProtocolException thrown: " + e.getMessage());
 				}
 				http.setDoOutput(true);
-				
+				//char[] message = msg.toCharArray();
+				String message = "{\"counter\": \""+updateCount+"\", \"message\": \""+msg+"\"}";
 				//byte[] out = "{\"position\":{\"Accuracy\":\"auto\",\"Altitude\":\"auto\",\"Latitude\":\"Unknown\",\"Longitude\":\"Unknown\",\"Accuracy\":\"auto\",\"Timestamp\":\"auto\"},\"updateCount\":\"NA\"}" .getBytes(StandardCharsets.UTF_8);
-				byte[] out = "{\"counter\": \""+updateCount+"\", \"message\": \""+msg+"\}".getBytes(StandardCharsets.UTF_8);
+				byte[] out = message.getBytes(Charset.forName("UTF-8"));
 				//byte[] out = "counter="+updateCount+"&message="+msg+"".getBytes(StandardCharsets.UTF_8);
 				int length = out.length;
 
@@ -84,9 +87,9 @@ public class MyService extends BackgroundService {
 				//http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 				try{
 					http.connect();
-					Log.d("http.connect(): "+ "OK");
+					Log.d("MyService", "http.connect(): OK");
 				}catch(IOException e){
-					Log.d("IOException: "+ e.getMessage());
+					Log.d("MyService", "Error: " + e.getMessage());
 					result.put("Message", "IOException thrown: " + e.getMessage());
 				}
 				//try(OutputStream os = http.getOutputStream()) {
@@ -95,9 +98,9 @@ public class MyService extends BackgroundService {
 				try{
 					os = http.getOutputStream();
 					os.write(out);
-					Log.d("os.write(out): "+ "OK");
+					Log.d("MyService", "os.write(out): OK");
 				}catch(Exception e){
-					Log.d("Exception: "+ e.getMessage());
+					Log.d("MyService", "Error: " + e.getMessage());
 					result.put("Message", "Exception thrown: " + e.getMessage());
 				}
 				
