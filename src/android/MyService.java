@@ -84,10 +84,13 @@ public class MyService extends BackgroundService {
 				//byte[] out = "counter="+updateCount+"&message="+msg+"".getBytes(StandardCharsets.UTF_8);
 				int length = out.length;
 
-				http.setFixedLengthStreamingMode(length);
-				http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+				//http.setFixedLengthStreamingMode(length);
+				//http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 				//http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+				http.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+				
 				try{
+					//con.connect();
 					http.connect();
 					Log.d("MyService", "http.connect(): OK");
 				}catch(IOException e){
@@ -115,10 +118,8 @@ public class MyService extends BackgroundService {
 				// Do something with http.getInputStream()
 				
 				try{
-					con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-					//con.connect();
-
-					BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charset.forName("UTF-8")));
+					
+					BufferedReader r = new BufferedReader(new InputStreamReader(http.getInputStream(), Charset.forName("UTF-8")));
 
 					StringBuilder sb = new StringBuilder();
 					String line;
