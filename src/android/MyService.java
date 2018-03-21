@@ -113,6 +113,25 @@ public class MyService extends BackgroundService {
 				}
 				
 				// Do something with http.getInputStream()
+				
+				try{
+					con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+					//con.connect();
+
+					BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charset.forName("UTF-8")));
+
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while ((line = r.readLine()) != null) {
+						sb.append(line);
+					}
+					Log.d("MyService", "Returned data:");
+					Log.d("MyService", sb.toString());
+					//System.out.println(sb.toString());
+				}catch(IOException e){
+					Log.d("MyService", "Error: " + e.getMessage());
+					result.put("Message", "IOException thrown: " + e.getMessage());
+				}
 			//}
 		} catch (JSONException e) {
 		}
