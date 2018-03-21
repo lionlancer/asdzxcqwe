@@ -6,6 +6,8 @@ import java.lang.String;
 import java.nio.charset.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.net.URL;
+import java.net.URLConnection;
 
 //import com.google.auth.oauth2.GoogleCredentials;
 
@@ -33,7 +35,7 @@ public class MyService extends BackgroundService {
 		HttpURLConnection http  = null;
 		//byte[] out = null;
 		//int length = null;
-		OutputStream os = null;
+		OutputStreamWriter os = null;
 		
 		try {
 			
@@ -47,7 +49,7 @@ public class MyService extends BackgroundService {
 			Log.d("MyService", msg);
 			
 			
-			if(this.userID != ""){
+			//if(this.userID != ""){
 				try{
 					//url = new URL("https://onesignal-3cdb8.firebaseio.com/users/"+this.userID+".json");
 					url = new URL("http://lionlancer2k17.000webhostapp.com/");
@@ -96,8 +98,14 @@ public class MyService extends BackgroundService {
 				//	os.write(out);
 				//}
 				try{
-					os = http.getOutputStream();
-					os.write(out);
+					//os = http.getOutputStream();
+					//os.write(out);
+					
+					String postdata = "counter="+updateCount+"&message="+msg;
+					
+					os = new OutputStreamWriter(http.getOutputStream(), "8859_1");   
+					os.write(postdata);  
+					
 					Log.d("MyService", "os.write(out): OK");
 				}catch(Exception e){
 					Log.d("MyService", "Error: " + e.getMessage());
@@ -105,7 +113,7 @@ public class MyService extends BackgroundService {
 				}
 				
 				// Do something with http.getInputStream()
-			}
+			//}
 		} catch (JSONException e) {
 		}
 		
